@@ -31,7 +31,9 @@ class CycloneDXJSONRenderer implements ReportRenderer {
 @Override
 void render(ProjectData data) {
   def config = data.project.licenseReport
-  def output = new File(config.outputDir, 'bom.json')
+  def outDir = new File(config.outputDir, 'sbom')
+  outDir.mkdirs()
+  def output = new File(outDir, 'bom.json')
 
   def jsonReport = [
       '$schema': "https://cyclonedx.org/schema/bom-1.4.schema.json",
