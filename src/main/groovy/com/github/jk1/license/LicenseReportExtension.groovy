@@ -16,9 +16,10 @@
 package com.github.jk1.license
 
 import com.github.jk1.license.filter.DependencyFilter
+import com.github.jk1.license.filter.LicenseBundleNormalizer
 import com.github.jk1.license.importer.DependencyDataImporter
+import com.github.jk1.license.render.CycloneDXJSONRenderer
 import com.github.jk1.license.render.ReportRenderer
-import com.github.jk1.license.render.SimpleHtmlReportRenderer
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedDependency
 import org.gradle.api.tasks.Input
@@ -42,7 +43,7 @@ class LicenseReportExtension {
     LicenseReportExtension(Project project) {
         outputDir = "${project.buildDir}/reports/dependency-license"
         projects = [project] + project.subprojects
-        renderers = new SimpleHtmlReportRenderer()
+        renderers = new CycloneDXJSONRenderer()
         configurations =
             project.getPlugins().hasPlugin('com.android.application') ? ['releaseRuntimeClasspath'] : ['runtimeClasspath']
         excludeOwnGroup = true
@@ -50,7 +51,7 @@ class LicenseReportExtension {
         excludeGroups = []
         excludes = []
         importers = []
-        filters = []
+        filters = [new LicenseBundleNormalizer()]
     }
 
     @Input
