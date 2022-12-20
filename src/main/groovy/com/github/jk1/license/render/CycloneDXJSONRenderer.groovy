@@ -19,11 +19,17 @@ import com.github.jk1.license.ProjectData
 import groovy.json.JsonBuilder
 import static com.github.jk1.license.render.LicenseDataCollector.singleModuleLicenseInfo
 
+/**
+ *
+ * This renderer generates a Software Bill Of Materials (SBOM) in CycloneDX JSON format.
+ * See https://cyclonedx.org for more information and specifications.
+ *
+ * @see com.github.jk1.license.render.JsonReportRenderer
+ */
 class CycloneDXJSONRenderer implements ReportRenderer {
 
 @Override
 void render(ProjectData data) {
-  /** @see com.github.jk1.license.render.JsonReportRenderer for inspiration */
   def config = data.project.licenseReport
   def output = new File(config.outputDir, 'bom.json')
 
